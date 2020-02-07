@@ -16,11 +16,7 @@ import './TodoList.scss';
 
 const TodoList = ({ todoList }) => {
   const elements = todoList.map(({ id, label, isCompleted }) => {
-    return (
-      <li key={id}>
-        <TodoItem label={label} isCompleted={isCompleted} />
-      </li>
-    );
+    return <TodoItem key={id} label={label} isCompleted={isCompleted} />;
   });
 
   return <ul className="todo-list list-group">{elements}</ul>;

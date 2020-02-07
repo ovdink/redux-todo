@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import TodoInput from '../../components/Todo-input';
 import TodoList from '../../components/Todo-list';
@@ -6,44 +7,33 @@ import Footer from '../../components/Footer';
 
 import './Todo.scss';
 
-const TODOS = [
-  {
-    id: 1,
-    label: 'Learn React',
-    isCompleted: true
-  },
-  {
-    id: 2,
-    label: 'Learn React-router',
-    isCompleted: true
-  },
-  {
-    id: 3,
-    label: 'Learn Redux',
-    isCompleted: true
-  },
-  {
-    id: 4,
-    label: 'Learn Redux-Thunk',
-    isCompleted: false
-  }
-];
-
-export default class Todo extends Component {
+class Todo extends Component {
   state = {
-    activeFilter: 'all'
+    activeFilter: 'all',
+    inputText: ''
+  };
+
+  handleInputChange = ({ target: { value } }) => {
+    console.log(value);
+    this.setState({
+      // inputText: value
+    });
   };
 
   render() {
-    const { activeFilter } = this.state;
-    const todoList = TODOS;
-
+    const { activeFilter, inputText } = this.state;
+    const todoList = [];
+    console.log(this.props);
     return (
       <>
-        <TodoInput />
+        <TodoInput onChange={this.handleInputChange} value={inputText} />
         <TodoList todoList={todoList} />
         <Footer amount={todoList.length} activeFilter={activeFilter} />
       </>
     );
   }
 }
+
+export default connect((state) => {
+  console.log(state);
+})(Todo);

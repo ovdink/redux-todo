@@ -6,8 +6,10 @@ import './App.scss';
 
 const App = () => {
   return (
-    <div className="app">
-      <Todo />
+    <div className="card m-2">
+      <div className="app card-body">
+        <Todo />
+      </div>
     </div>
   );
 };
