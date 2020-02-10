@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { addTodo, deleteTodo, completeTodo, changeFilter } from '../../actions';
+
 import TodoInput from '../../components/Todo-input';
 import TodoList from '../../components/Todo-list';
 import Footer from '../../components/Footer';
@@ -9,31 +11,92 @@ import './Todo.scss';
 
 class Todo extends Component {
   state = {
-    activeFilter: 'all',
     inputText: ''
   };
 
   handleInputChange = ({ target: { value } }) => {
     console.log(value);
     this.setState({
-      // inputText: value
+      inputText: value
     });
   };
 
+  addTodoInForm = () => {
+    console.log('ADDED!');
+    const { inputText } = this.state;
+
+    if (inputText.length >= 3) {
+      const { addTodo } = this.props;
+
+      addTodo(new Date().getTime(), inputText, false);
+
+      this.setState({
+        inputText: ''
+      });
+    } else alert('Ваша задача составляет меньше 3 символов!');
+  };
+
+  filterTodos = (todos, activeFilter) => {
+    switch (activeFilter) {
+      case 'completed':
+        return todos.filter((todo) => todo.isCompleted);
+
+      case 'active':
+        return todos.filter((todo) => !todo.isCompleted);
+
+      default:
+        return todos;
+    }
+  };
+
+  getActiveTodosCounter = (todos) =>
+    todos.filter((todo) => !todo.isCompleted).length;
+
   render() {
-    const { activeFilter, inputText } = this.state;
-    const todoList = [];
-    console.log(this.props);
+    const { inputText } = this.state;
+    const {
+      todos,
+      deleteTodo,
+      completeTodo,
+      filter,
+      changeFilter
+    } = this.props;
+    const filteredTodos = this.filterTodos(todos, filter);
+    const todosCounter = this.getActiveTodosCounter(todos);
+
     return (
       <>
-        <TodoInput onChange={this.handleInputChange} value={inputText} />
-        <TodoList todoList={todoList} />
-        <Footer amount={todoList.length} activeFilter={activeFilter} />
+        <TodoInput
+          onButtonPress={this.addTodoInForm}
+          onChange={this.handleInputChange}
+          value={inputText}
+        />
+        <TodoList
+          todoList={filteredTodos}
+          removeTodo={deleteTodo}
+          completeTodo={completeTodo}
+        />
+        <Footer
+          amount={todosCounter}
+          activeFilter={filter}
+          changeFilter={changeFilter}
+        />
       </>
     );
   }
 }
 
-export default connect((state) => {
-  console.log(state);
+export default connect(({ todos, filter }) => ({ todos, filter }), {
+  addTodo,
+  deleteTodo,
+  completeTodo,
+  changeFilter
 })(Todo);
+
+// export default connect(
+//   (state) => ({
+//     todos: state.todos,
+//     filter: state.filter
+//   }),
+//   { addTodo, deleteTodo, completeTodo, changeFilter }
+// )(Todo);

@@ -1,3 +1,8 @@
-import { todoAdd } from './actionCreator';
+import {
+  addTodo,
+  deleteTodo,
+  completeTodo,
+  changeFilter
+} from './actionCreator';
 
-export { todoAdd };
+export { addTodo, deleteTodo, completeTodo, changeFilter };

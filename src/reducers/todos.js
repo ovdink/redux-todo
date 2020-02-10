@@ -1,4 +1,4 @@
-import { ADD_TODO } from '../constans/constans';
+import { ADD_TODO, DELETE_TODO, COMPLETE_TODO } from '../constans/constans';
 
 const TODOS = [
   {
@@ -36,6 +36,16 @@ const todos = (state = TODOS, action) => {
           isCompleted
         }
       ];
+
+    case DELETE_TODO:
+      return [...state].filter((todo) => todo.id !== id);
+
+    case COMPLETE_TODO:
+      return [...state].map((todo) => {
+        if (todo.id === id) todo.isCompleted = !todo.isCompleted;
+        return todo;
+      });
+
     default:
       return state;
   }

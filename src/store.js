@@ -9,7 +9,7 @@ const composeEnhancers =
     : compose;
 
 const configureStore = (preloadedState) => {
-  createStore(rootReducer, preloadedState, composeEnhancers());
+  return createStore(rootReducer, preloadedState, composeEnhancers());
 };
 
 const store = configureStore({});

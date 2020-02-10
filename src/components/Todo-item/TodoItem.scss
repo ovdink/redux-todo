@@ -4,6 +4,35 @@
   transition: all 0.5s linear;
 }
 
+.text {
+  user-select: none;
+}
+
 i {
   cursor: pointer;
+}
+
+.todo-item {
+  &__complete {
+    transition: all 0.2s;
+    color: rgb(148, 228, 148);
+
+    &:hover {
+      color: rgb(81, 216, 81);
+    }
+
+    &__active {
+      // transition: all 0.5s;
+      color: rgb(28, 153, 28);
+    }
+  }
+
+  &__delete {
+    transition: all 0.2s;
+    color: rgb(241, 134, 152);
+
+    &:hover {
+      color: rgb(185, 7, 7);
+    }
+  }
 }
