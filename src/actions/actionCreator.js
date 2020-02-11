@@ -5,14 +5,29 @@ import {
   CHANGE_FILTER
 } from '../constans/constans';
 
-const addTodo = (id, label, isCompleted) => {
-  return {
-    type: ADD_TODO,
-    id,
-    label,
-    isCompleted
-  };
+// without redux-thunk middleware method
+
+const addTodo = (id, label, isCompleted) => (dispatch) => {
+  setTimeout(() => {
+    dispatch({
+      type: ADD_TODO,
+      id,
+      label,
+      isCompleted
+    });
+  }, 1500);
 };
+
+//need create to service with acync actions
+
+// const addTodo = (id, label, isCompleted) => {
+//   return {
+//     type: ADD_TODO,
+//     id,
+//     label,
+//     isCompleted
+//   };
+// };
 
 const deleteTodo = (id) => {
   return {

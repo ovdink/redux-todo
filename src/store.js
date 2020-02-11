@@ -1,5 +1,7 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
+import { save } from 'redux-localstorage-simple';
+import thunk from 'redux-thunk';
 
 const composeEnhancers =
   process.env.NODE_ENV !== 'production' &&
@@ -8,8 +10,14 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
+console.log(thunk);
+
 const configureStore = (preloadedState) => {
-  return createStore(rootReducer, preloadedState, composeEnhancers());
+  return createStore(
+    rootReducer,
+    preloadedState,
+    composeEnhancers(applyMiddleware(thunk, save({ namespace: 'todo-list' })))
+  );
 };
 
 const store = configureStore({});
