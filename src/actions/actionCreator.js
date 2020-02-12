@@ -1,11 +1,40 @@
 import {
+  TODOS_LOADED,
   ADD_TODO,
   DELETE_TODO,
   COMPLETE_TODO,
   CHANGE_FILTER
 } from '../constans/constans';
 
-// without redux-thunk middleware method
+// unused
+const todosLoaded = (newTodos) => {
+  return {
+    type: TODOS_LOADED,
+    newTodos
+  };
+};
+
+const todosRequested = () => {
+  return {
+    type: 'FETCH_TODOS_REQUEST'
+  };
+};
+
+const todosError = (error) => {
+  return {
+    type: 'FETCH_TODOS_FAILURE',
+    error
+  };
+};
+
+const fetchBooks = (todosService) => () => (dispatch) => {
+  dispatch(todosRequested());
+  todosService
+    .getTodos()
+    .then((data) => dispatch(todosLoaded(data)))
+    .catch((err) => dispatch(todosError(err)));
+};
+// \unused
 
 const addTodo = (id, label, isCompleted) => (dispatch) => {
   setTimeout(() => {
@@ -17,8 +46,6 @@ const addTodo = (id, label, isCompleted) => (dispatch) => {
     });
   }, 1500);
 };
-
-//need create to service with acync actions
 
 // const addTodo = (id, label, isCompleted) => {
 //   return {
@@ -52,4 +79,4 @@ const changeFilter = (activeFilter) => {
   };
 };
 
-export { addTodo, deleteTodo, completeTodo, changeFilter };
+export { todosLoaded, addTodo, deleteTodo, completeTodo, changeFilter };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Todo from '../containers/Todo';
+import Todo from '../../containers/Todo';
 
 import './App.scss';
 

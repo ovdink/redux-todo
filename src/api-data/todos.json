@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "label": "Learn React",
+    "isCompleted": true
+  },
+  {
+    "id": 2,
+    "label": "Learn React-router",
+    "isCompleted": true
+  },
+  {
+    "id": 3,
+    "label": "Learn Redux",
+    "isCompleted": true
+  },
+  {
+    "id": 4,
+    "label": "Learn Redux-Thunk",
+    "isCompleted": false
+  }
+]

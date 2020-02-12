@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { addTodo, deleteTodo, completeTodo, changeFilter } from '../../actions';
+import { addTodo, deleteTodo, completeTodo, changeFilter } from "../../actions";
 
-import TodoInput from '../../components/Todo-input';
-import TodoList from '../../components/Todo-list';
-import Footer from '../../components/Footer';
+import TodoInput from "../../components/Todo-input";
+import TodoList from "../../components/Todo-list";
+import Footer from "../../components/Footer";
 
-import './Todo.scss';
+import "./Todo.scss";
 
 class Todo extends Component {
   state = {
-    inputText: ''
+    inputText: ""
   };
 
   handleInputChange = ({ target: { value } }) => {
-    console.log(value);
     this.setState({
       inputText: value
     });
   };
 
   addTodoInForm = () => {
-    console.log('ADDED!');
+    console.log("ADDED!");
     const { inputText } = this.state;
 
     if (inputText.length >= 3) {
@@ -31,26 +30,26 @@ class Todo extends Component {
       addTodo(new Date().getTime(), inputText, false);
 
       this.setState({
-        inputText: ''
+        inputText: ""
       });
-    } else alert('Ваша задача составляет меньше 3 символов!');
+    } else alert("Ваша задача составляет меньше 3 символов!");
   };
 
   filterTodos = (todos, activeFilter) => {
     switch (activeFilter) {
-      case 'completed':
-        return todos.filter((todo) => todo.isCompleted);
+      case "completed":
+        return todos.filter(todo => todo.isCompleted);
 
-      case 'active':
-        return todos.filter((todo) => !todo.isCompleted);
+      case "active":
+        return todos.filter(todo => !todo.isCompleted);
 
       default:
         return todos;
     }
   };
 
-  getActiveTodosCounter = (todos) =>
-    todos.filter((todo) => !todo.isCompleted).length;
+  getActiveTodosCounter = todos =>
+    todos.filter(todo => !todo.isCompleted).length;
 
   render() {
     const { inputText } = this.state;

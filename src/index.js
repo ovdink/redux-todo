@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import App from './App';
+import App from './components/App';
 import store from './store';
 
 import 'normalize.css';
-
-console.log(store.getState());
 
 ReactDOM.render(
   <Provider store={store}>

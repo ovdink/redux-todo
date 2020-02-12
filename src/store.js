@@ -10,8 +10,6 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-console.log(thunk);
-
 const configureStore = (preloadedState) => {
   return createStore(
     rootReducer,
