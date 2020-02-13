@@ -1,8 +1,7 @@
-import {
+export {
   addTodo,
   deleteTodo,
   completeTodo,
-  changeFilter
+  changeFilter,
+  fetchTodoTest
 } from './actionCreator';
-
-export { addTodo, deleteTodo, completeTodo, changeFilter };

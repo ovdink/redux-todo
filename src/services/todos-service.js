@@ -1,11 +1,31 @@
-import data from '../api-data/todos.json';
+// import data from '../api-data/todos.json';
 
-export const getTodos = () => {
-  // console.log(data);
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() > 0.8) reject(new Error('data error!'));
-      else resolve(data);
-    }, 1000);
-  });
+// const timeout = () => {
+//   setTimeout(() => {
+//     return getTodosFake();
+//   }, 0);
+// };
+
+const getTodosFake = async () => {
+  const t = await import(
+    /* webpackChunkName: "test" */
+    '../api-data/todos.json'
+  );
+
+  return t.default;
+};
+const getTodosReal = async () => {
+  const t = await import(
+    /* webpackChunkName: "test" */
+    '../api-data/todos.json'
+  );
+  return t.default;
+};
+
+export const getTodos = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    return await getTodosReal();
+  } else {
+    return await getTodosFake();
+  }
 };

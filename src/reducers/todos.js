@@ -8,48 +8,59 @@ import { getTodos } from '../services/todos-service';
 
 import { load } from 'redux-localstorage-simple';
 
-let TODOS = load({ namespace: 'todo-list' });
+// let TODOS = load({ namespace: 'todo-list' });
 
-const fetchTodos = () => {
-  getTodos().then((data) => {
-    return data;
-  });
-};
+// const fetchTodos = async () => {
+//   const res = await getTodos();
+//   console.log(res);
+//   return res;
+//   // (data) => {
+//   //   if (!data) {
+//   //     console.log('invalid data format');
+//   //     return;
+//   //   }
+//   //   console.log(data);
+//   // };
+// };
 
-if (!TODOS || !TODOS.todos || !TODOS.todos.length) {
-  // fetchTodos если ок ( с рандом.мас и сеттаймаут вернуть
-  // TODOS забив туда данные из todos-service, которые взяли данные из json)
+// const DATA = fetchTodos();
 
-  // захардкоженый объект
-  TODOS = {
-    // todos: []
-    todos: [
-      {
-        id: 1,
-        label: 'Learn React',
-        isCompleted: true
-      },
-      {
-        id: 2,
-        label: 'Learn React-router',
-        isCompleted: true
-      },
-      {
-        id: 3,
-        label: 'Learn Redux',
-        isCompleted: true
-      },
-      {
-        id: 4,
-        label: 'Learn Redux-Thunk',
-        isCompleted: false
-      }
-    ]
-  };
-}
+// console.log(DATA);
 
-const todos = (state = TODOS.todos, action) => {
-  const { id, label, isCompleted, type } = action;
+// if (!TODOS || !TODOS.todos || !TODOS.todos.length) {
+//   // fetchTodos если ок ( с рандом.мас и сеттаймаут вернуть
+//   // TODOS забив туда данные из todos-service, которые взяли данные из json)
+
+//   // захардкоженый объект
+//   TODOS = {
+//     // todos: []
+//     todos: [
+//       {
+//         id: 1,
+//         label: 'Learn React',
+//         isCompleted: true
+//       },
+//       {
+//         id: 2,
+//         label: 'Learn React-router',
+//         isCompleted: true
+//       },
+//       {
+//         id: 3,
+//         label: 'Learn Redux',
+//         isCompleted: true
+//       },
+//       {
+//         id: 4,
+//         label: 'Learn Redux-Thunk',
+//         isCompleted: false
+//       }
+//     ]
+//   };
+// }
+
+const todos = (state = [], action) => {
+  const { id, label, isCompleted, type, value } = action;
 
   switch (type) {
     case ADD_TODO:
@@ -61,6 +72,9 @@ const todos = (state = TODOS.todos, action) => {
           isCompleted
         }
       ];
+
+    case 'set_data':
+      return [...state, ...value];
 
     case DELETE_TODO:
       return [...state].filter((todo) => todo.id !== id);
@@ -76,4 +90,24 @@ const todos = (state = TODOS.todos, action) => {
   }
 };
 
-export default todos;
+const loading = (state = false, action) => {
+  const { type, value } = action;
+  switch (type) {
+    case 'set_loading':
+      return value;
+    default:
+      return state;
+  }
+};
+
+const error = (state = false, action) => {
+  const { type, value } = action;
+  switch (type) {
+    case 'set_error':
+      return value;
+    default:
+      return state;
+  }
+};
+
+export { todos, error, loading };
