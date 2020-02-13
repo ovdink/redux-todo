@@ -68,7 +68,8 @@ class Todo extends Component {
       deleteTodo,
       completeTodo,
       filter,
-      changeFilter
+      changeFilter,
+      loading
     } = this.props;
     const filteredTodos = this.filterTodos(todos, filter);
     const todosCounter = this.getActiveTodosCounter(todos);
@@ -85,6 +86,7 @@ class Todo extends Component {
           removeTodo={deleteTodo}
           completeTodo={completeTodo}
         />
+        {loading.toString()}
         <Footer
           amount={todosCounter}
           activeFilter={filter}
@@ -95,13 +97,16 @@ class Todo extends Component {
   }
 }
 
-export default connect(({ todos, filter }) => ({ todos, filter }), {
-  addTodo,
-  fetchTodoTest,
-  deleteTodo,
-  completeTodo,
-  changeFilter
-})(Todo);
+export default connect(
+  ({ todos, filter, loading }) => ({ todos, filter, loading }),
+  {
+    addTodo,
+    fetchTodoTest,
+    deleteTodo,
+    completeTodo,
+    changeFilter
+  }
+)(Todo);
 
 // export default connect(
 //   (state) => ({

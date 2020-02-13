@@ -1,14 +1,8 @@
-import {
-  TODOS_LOADED,
-  ADD_TODO,
-  DELETE_TODO,
-  COMPLETE_TODO
-} from '../constans/constans';
-import { getTodos } from '../services/todos-service';
+import { ADD_TODO, DELETE_TODO, COMPLETE_TODO } from '../constans/constans';
 
 import { load } from 'redux-localstorage-simple';
 
-// let TODOS = load({ namespace: 'todo-list' });
+let TODOS = load({ namespace: 'todo-list' });
 
 // const fetchTodos = async () => {
 //   const res = await getTodos();
@@ -59,7 +53,7 @@ import { load } from 'redux-localstorage-simple';
 //   };
 // }
 
-const todos = (state = [], action) => {
+const todos = (state = TODOS.todos || [], action) => {
   const { id, label, isCompleted, type, value } = action;
 
   switch (type) {
@@ -74,7 +68,13 @@ const todos = (state = [], action) => {
       ];
 
     case 'set_data':
-      return [...state, ...value];
+      return [
+        ...state,
+        ...value.filter(
+          (item) =>
+            state.findIndex((currentItem) => currentItem.id === item.id) < 0
+        )
+      ];
 
     case DELETE_TODO:
       return [...state].filter((todo) => todo.id !== id);

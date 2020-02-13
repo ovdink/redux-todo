@@ -1,10 +1,10 @@
 // import data from '../api-data/todos.json';
 
-// const timeout = () => {
-//   setTimeout(() => {
-//     return getTodosFake();
-//   }, 0);
-// };
+const timeout = (ms) => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(getTodosFake()), ms)
+  );
+};
 
 const getTodosFake = async () => {
   const t = await import(
@@ -26,6 +26,6 @@ export const getTodos = async () => {
   if (process.env.NODE_ENV === 'production') {
     return await getTodosReal();
   } else {
-    return await getTodosFake();
+    return await timeout(3000);
   }
 };
